@@ -17,7 +17,7 @@ public class SubscriptionService {
     private PlanRepository planRepository;
 
     @Transactional
-    public void subscribe(Long id, Long userId, Long planId) throws BusinessException {
+    public void subscribe(Long userId, Long planId) throws BusinessException {
         if (subscriptionRepository.existsActiveByUser(userId)) {
             throw new BusinessException("User already has an active subscription");
         }
@@ -25,7 +25,7 @@ public class SubscriptionService {
         Plan plan = planRepository.findById(planId)
                 .orElseThrow(() -> new BusinessException("Plan not found"));
 
-        Subscription subscription = Subscription.create(id, userId, plan);
+        Subscription subscription = Subscription.create(userId, plan);
 
         subscriptionRepository.save(subscription);
 

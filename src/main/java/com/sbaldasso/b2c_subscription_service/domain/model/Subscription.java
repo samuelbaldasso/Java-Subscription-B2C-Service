@@ -1,69 +1,59 @@
 package com.sbaldasso.b2c_subscription_service.domain.model;
 
 import com.sbaldasso.b2c_subscription_service.domain.valueobject.SubscriptionStatus;
+import lombok.Getter;
 
 import java.time.LocalDate;
-import java.util.UUID;
 
+@Getter
 public class Subscription {
 
-    private final UUID id;
-    private final UUID userId;
-    private final UUID planId;
+    private Long id;
+    private Long userId;
+    private Long planId;
 
     private SubscriptionStatus status;
 
-    private final LocalDate startDate;
+    private LocalDate startDate;
     private LocalDate endDate;
 
-    private final boolean trial;
-    private final int billingCycleDays;
+    private LocalDate nextBillingDate; // Importante para o ciclo de cobrança
 
-    private Subscription(UUID userId, UUID planId, boolean trial, int billingCycleDays) {
-        this.id = UUID.randomUUID();
+    private boolean trial;
+
+    private Subscription(Long userId, Plan plan) {
         this.userId = userId;
-        this.planId = planId;
-        this.trial = trial;
-        this.billingCycleDays = billingCycleDays;
-
+        this.planId = plan.getId();
         this.startDate = LocalDate.now();
-        this.endDate = startDate.plusDays(billingCycleDays);
-        this.status = trial ? SubscriptionStatus.TRIAL : SubscriptionStatus.ACTIVE;
-    }
 
-    public static Subscription createTrial(UUID userId, UUID planId, int trialDays) {
-        return new Subscription(userId, planId, true, trialDays);
-    }
-
-    public static Subscription createPaid(UUID userId, UUID planId, int billingCycleDays) {
-        return new Subscription(userId, planId, false, billingCycleDays);
-    }
-
-    public void renew() {
-        if (status == SubscriptionStatus.CANCELED || status == SubscriptionStatus.EXPIRED) {
-            throw new IllegalStateException("Cannot renew canceled or expired subscription");
+        if (plan.hasTrial()) {
+            this.trial = true;
+            this.status = SubscriptionStatus.TRIAL;
+            this.endDate = startDate.plusDays(plan.getTrialDays());
+            this.nextBillingDate = this.endDate;
+        } else {
+            this.trial = false;
+            this.status = SubscriptionStatus.ACTIVE;
+            this.endDate = startDate.plusDays(plan.getBillingCycleDays());
+            this.nextBillingDate = this.startDate;
         }
+    }
 
+    public static Subscription create(Long userId, Plan plan) {
+        return new Subscription(userId, plan);
+    }
+
+    public void renew(Plan plan) {
+        if (status == SubscriptionStatus.CANCELED) {
+            throw new IllegalStateException("Cannot renew canceled subscription");
+        }
         this.status = SubscriptionStatus.ACTIVE;
-        this.endDate = endDate.plusDays(billingCycleDays);
+        this.trial = false;
+        // Estende a data final com base no ciclo do plano
+        this.endDate = this.endDate.plusDays(plan.getBillingCycleDays());
     }
 
     public void cancel() {
-        if (status == SubscriptionStatus.CANCELED) {
-            return; // idempotente
-        }
-
-        if (status == SubscriptionStatus.EXPIRED) {
-            throw new IllegalStateException("Expired subscription cannot be canceled");
-        }
-
         this.status = SubscriptionStatus.CANCELED;
     }
-
-    public void expireIfNeeded(LocalDate today) {
-        if (today.isAfter(endDate) && status != SubscriptionStatus.CANCELED) {
-            this.status = SubscriptionStatus.EXPIRED;
-        }
-    }
-
 }

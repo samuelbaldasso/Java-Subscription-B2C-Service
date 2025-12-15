@@ -1,4 +1,4 @@
-package com.sbaldasso.b2c_subscription_service;
+import com.sbaldasso.b2c_subscription_service.;
 
 import com.sbaldasso.b2c_subscription_service.bootstrap.B2cSubscriptionServiceApplication;
 import org.springframework.boot.SpringApplication;

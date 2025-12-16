@@ -1,10 +1,10 @@
-package com.sbaldasso.b2c_subscription_service.domain.model;
+package com.sbaldasso.b2c_subscription_service.subscription.domain.model;
 
 import com.sbaldasso.b2c_subscription_service.domain.exception.SubscriptionException;
-package com.sbaldasso.b2c_subscription_service.domain.model.Plan;
-package com.sbaldasso.b2c_subscription_service.domain.model.Subscription;
-package com.sbaldasso.b2c_subscription_service.domain.model.SubscriptionStatus;
-package com.sbaldasso.b2c_subscription_service.domain.model.User;
+import com.sbaldasso.b2c_subscription_service.domain.model.Plan;
+import com.sbaldasso.b2c_subscription_service.domain.model.Subscription;
+import com.sbaldasso.b2c_subscription_service.domain.model.SubscriptionStatus;
+import com.sbaldasso.b2c_subscription_service.domain.model.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

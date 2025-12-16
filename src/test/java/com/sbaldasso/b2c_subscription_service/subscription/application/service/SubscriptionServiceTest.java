@@ -1,20 +1,22 @@
-import com.sbaldasso.b2c_subscription_service.application.service;
+package com.sbaldasso.b2c_subscription_service.subscription.application.service;
 
-import com.subscription.application.dto.request.CreateSubscriptionRequest;
-import com.subscription.application.dto.response.SubscriptionResponse;
-import com.subscription.domain.event.SubscriptionCreatedEvent;
-import com.subscription.domain.exception.SubscriptionException;
-import com.subscription.domain.model.*;
-import com.subscription.infrastructure.repository.PlanRepository;
-import com.subscription.infrastructure.repository.SubscriptionRepository;
-import com.subscription.infrastructure.repository.UserRepository;
+import com.sbaldasso.b2c_subscription_service.application.dto.request.CreateSubscriptionRequest;
+import com.sbaldasso.b2c_subscription_service.application.dto.response.SubscriptionResponse;
+import com.sbaldasso.b2c_subscription_service.application.service.SubscriptionService;
+import com.sbaldasso.b2c_subscription_service.domain.event.SubscriptionCreatedEvent;
+import com.sbaldasso.b2c_subscription_service.domain.exception.SubscriptionException;
+import com.sbaldasso.b2c_subscription_service.domain.model.Plan;
+import com.sbaldasso.b2c_subscription_service.domain.model.Subscription;
+import com.sbaldasso.b2c_subscription_service.domain.model.SubscriptionStatus;
+import com.sbaldasso.b2c_subscription_service.domain.model.User;
+import com.sbaldasso.b2c_subscription_service.infrastructure.repository.PlanRepository;
+import com.sbaldasso.b2c_subscription_service.infrastructure.repository.SubscriptionRepository;
+import com.sbaldasso.b2c_subscription_service.infrastructure.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.context.ApplicationEventPublisher;
 
@@ -117,7 +119,7 @@ class SubscriptionServiceTest {
         when(userRepository.findById(1L)).thenReturn(Optional.of(user));
         
         // When & Then
-        assertThrows(SubscriptionException.class, 
+        assertThrows(SubscriptionException.class,
                 () -> subscriptionService.createSubscription(1L, request));
     }
     

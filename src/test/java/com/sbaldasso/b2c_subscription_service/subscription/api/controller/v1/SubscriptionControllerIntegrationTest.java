@@ -1,15 +1,15 @@
-import com.sbaldasso.b2c_subscription_service.api.controller.v1;
+package com.sbaldasso.b2c_subscription_service.subscription.api.controller.v1;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.subscription.application.dto.request.CreatePlanRequest;
-import com.subscription.application.dto.request.CreateSubscriptionRequest;
-import com.subscription.application.dto.request.CreateUserRequest;
-import com.subscription.application.dto.request.LoginRequest;
-import com.subscription.application.dto.response.JwtResponse;
-import com.subscription.domain.model.Role;
-import com.subscription.domain.model.SubscriptionStatus;
-import com.subscription.domain.model.User;
-import com.subscription.infrastructure.repository.UserRepository;
+import com.sbaldasso.b2c_subscription_service.application.dto.request.CreatePlanRequest;
+import com.sbaldasso.b2c_subscription_service.application.dto.request.CreateSubscriptionRequest;
+import com.sbaldasso.b2c_subscription_service.application.dto.request.CreateUserRequest;
+import com.sbaldasso.b2c_subscription_service.application.dto.request.LoginRequest;
+import com.sbaldasso.b2c_subscription_service.application.dto.response.JwtResponse;
+import com.sbaldasso.b2c_subscription_service.domain.model.Role;
+import com.sbaldasso.b2c_subscription_service.domain.model.SubscriptionStatus;
+import com.sbaldasso.b2c_subscription_service.domain.model.User;
+import com.sbaldasso.b2c_subscription_service.infrastructure.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,7 +1,7 @@
-import com.sbaldasso.b2c_subscription_service.;
+package com.sbaldasso.b2c_subscription_service;
 
-import com.sbaldasso.b2c_subscription_service.bootstrap.B2cSubscriptionServiceApplication;
 import org.springframework.boot.SpringApplication;
+import org.testcontainers.utility.TestcontainersConfiguration;
 
 public class TestB2cSubscriptionServiceApplication {
 

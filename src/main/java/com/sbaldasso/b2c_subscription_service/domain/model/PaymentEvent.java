@@ -37,5 +37,6 @@ public class PaymentEvent {
     private String gatewayResponse;
     
     @Column(nullable = false, updatable = false)
+    @Builder.Default
     private LocalDateTime createdAt = LocalDateTime.now();
 }

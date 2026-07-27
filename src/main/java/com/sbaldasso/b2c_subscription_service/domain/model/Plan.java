@@ -39,18 +39,23 @@ public class Plan {
     private BigDecimal price;
 
     @Column(nullable = false)
+    @Builder.Default
     private Integer billingCycleInDays = 30;
 
     @Column(nullable = false)
+    @Builder.Default
     private Integer trialPeriodInDays = 7;
 
     @Column(nullable = false)
+    @Builder.Default
     private Boolean active = true;
 
     @Column(nullable = false, updatable = false)
+    @Builder.Default
     private LocalDateTime createdAt = LocalDateTime.now();
 
     @Column(nullable = false)
+    @Builder.Default
     private LocalDateTime updatedAt = LocalDateTime.now();
 
     @PreUpdate

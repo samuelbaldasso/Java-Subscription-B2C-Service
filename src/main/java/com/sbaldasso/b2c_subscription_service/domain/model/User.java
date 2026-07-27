@@ -1,5 +1,6 @@
 package com.sbaldasso.b2c_subscription_service.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -42,18 +43,23 @@ public class User implements UserDetails {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
+    @Builder.Default
     private Role role = Role.USER;
 
     @Column(nullable = false)
+    @Builder.Default
     private Boolean active = true;
 
     @Column(nullable = false, updatable = false)
+    @Builder.Default
     private LocalDateTime createdAt = LocalDateTime.now();
 
     @Column(nullable = false)
+    @Builder.Default
     private LocalDateTime updatedAt = LocalDateTime.now();
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
     private Subscription activeSubscription;
 
     @PreUpdate

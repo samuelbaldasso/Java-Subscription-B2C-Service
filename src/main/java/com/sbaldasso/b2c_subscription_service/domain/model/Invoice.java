@@ -29,6 +29,7 @@ public class Invoice {
     private Long version;
 
     @Column(nullable = false, unique = true, updatable = false)
+    @Builder.Default
     private String invoiceNumber = UUID.randomUUID().toString();
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -40,6 +41,7 @@ public class Invoice {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
+    @Builder.Default
     private InvoiceStatus status = InvoiceStatus.PENDING;
 
     @Column(nullable = false)
@@ -49,9 +51,11 @@ public class Invoice {
     private LocalDateTime paidAt;
 
     @Column(nullable = false, updatable = false)
+    @Builder.Default
     private LocalDateTime createdAt = LocalDateTime.now();
 
     @Column(nullable = false)
+    @Builder.Default
     private LocalDateTime updatedAt = LocalDateTime.now();
 
     @PreUpdate

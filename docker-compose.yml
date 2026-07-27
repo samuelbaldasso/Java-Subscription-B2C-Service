@@ -11,11 +11,24 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - postgres_/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data
     networks:
       - subscription-network
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: subscription-redis
+    ports:
+      - "6379:6379"
+    networks:
+      - subscription-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -59,6 +72,8 @@ services:
         condition: service_healthy
       kafka:
         condition: service_healthy
+      redis:
+        condition: service_healthy
     ports:
       - "8080:8080"
     environment:
@@ -67,13 +82,15 @@ services:
       DATABASE_USERNAME: postgres
       DATABASE_PASSWORD: postgres
       KAFKA_BOOTSTRAP_SERVERS: kafka:29092
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
       JWT_SECRET: your-super-secret-jwt-key-change-this-in-production-must-be-at-least-32-characters
     networks:
       - subscription-network
     restart: unless-stopped
 
 volumes:
-  postgres_
+  postgres_data:
 
 networks:
   subscription-network:

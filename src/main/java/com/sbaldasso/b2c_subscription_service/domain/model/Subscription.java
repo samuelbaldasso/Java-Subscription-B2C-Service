@@ -37,6 +37,7 @@ public class Subscription {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
+    @Builder.Default
     private SubscriptionStatus status = SubscriptionStatus.TRIAL;
 
     @Column(nullable = false)
@@ -55,9 +56,11 @@ public class Subscription {
     private LocalDateTime expiresAt;
 
     @Column(nullable = false, updatable = false)
+    @Builder.Default
     private LocalDateTime createdAt = LocalDateTime.now();
 
     @Column(nullable = false)
+    @Builder.Default
     private LocalDateTime updatedAt = LocalDateTime.now();
 
     @PreUpdate
